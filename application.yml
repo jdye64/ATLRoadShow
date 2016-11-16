@@ -1,0 +1,5 @@
+applicationName: Dropwizard Bootstrap
+
+server:
+  type: simple
+  applicationContextPath: /
