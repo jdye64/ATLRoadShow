@@ -26,6 +26,9 @@ services:
     ports:
      - "8080:8080"
      - "9191:9191"
+    links:
+     - master0.dev
+     - dn0.dev
   postgres.dev:
     image: jdye64/docker-hwx:hdp-postgres-250
     networks:
