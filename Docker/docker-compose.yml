@@ -1,35 +1,39 @@
 version: '2'
 services:
+  minifi.dev:
+    build:
+        context: ./images/DemoAgent
+        dockerfile: Dockerfile
+    image: jdye64/atlroadshow:DemoAgent
+    networks:
+     - dev
+    hostname: minifi
+    domainname: dev
+    ports:
+     - "8181:8080"
+     - "8090:8090"
+    links:
+     - nifi.dev
   nifi.dev:
-    image: jdye64/hdf-demos:hdf-2.0.0.0-server-bridgestone
+    build:
+        context: ./images/DemoServer
+        dockerfile: Dockerfile
+    image: jdye64/atlroadshow:DemoServer
     networks:
      - dev
     hostname: nifi
     domainname: dev
     ports:
      - "8080:8080"
-     - "9090:9090"
-    links:
-     - mysql.dev
-  mysql.dev:
-    image: jdye64/hdf-demos:mysql-bridgestone
-    environment:
-       MYSQL_ROOT_PASSWORD: bridgestone
-       MYSQL_DATABASE: bridgestone
-       MYSQL_USER: bridgestone
-       MYSQL_PASSWORD: bridgestone
-    networks:
-     - dev
-    hostname: mysql
-    domainname: dev
+     - "9191:9191"
   postgres.dev:
-    image: jdye64/hdf-demos:hdp-postgres-250-bridgestone
+    image: jdye64/docker-hwx:hdp-postgres-250
     networks:
      - dev
     hostname: postgres
     domainname: dev
   ambari-server.dev:
-    image: jdye64/hdf-demos:hdp-ambari-server-250-bridgestone
+    image: jdye64/docker-hwx:hdp-ambari-server-250
     networks:
      - dev
     hostname: ambari-server
@@ -39,7 +43,7 @@ services:
     links:
      - postgres.dev
   master0.dev:
-    image: jdye64/hdf-demos:hdp-node-250-master0-bridgestone
+    image: jdye64/docker-hwx:hdp-node-250
     privileged: true
     networks:
      - dev
@@ -91,7 +95,7 @@ services:
      # Kerberos
      #- "88:88"
   dn0.dev:
-    image: jdye64/hdf-demos:hdp-node-250-dn0-bridgestone
+    image: jdye64/docker-hwx:hdp-node-250
     privileged: true
     networks:
      - dev

@@ -1,10 +1,9 @@
-FROM centos:7.2.1511
+FROM jdye64/docker-hwx:nifi-1.0.0
 MAINTAINER Jeremy Dyer <jdye64@gmail.com>
 
-# Add the MiNiFi binaries
-ADD ./minifi-0.0.1-bin.zip /
+ADD atlroadshow-webapp-1.0.0.jar /
+ADD application.yml /
+ADD startupScript.sh /
+RUN chmod +x /startupScript.sh
 
-RUN yum update -y
-
-RUN yum install -y vim tar git
-RUN unzip minifi-0.0.1-bin.zip
+CMD ./startupScript.sh
