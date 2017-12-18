@@ -84,6 +84,16 @@ public class Main {
                     transaction.confirm();
                     transaction.complete();
 
+                } if (logMessage != null && logMessage.contains("kill") && logMessage.contains("WARN")) {
+
+                    Map<String, String> atts = dataPacket.getAttributes();
+                    atts.put("LOG.STATUS", "DEAD_JVM");
+
+                    final Transaction transaction = dataToSparkClient.createTransaction(TransferDirection.SEND);
+                    transaction.send(dataPacket.getContent(), atts);
+                    transaction.confirm();
+                    transaction.complete();
+
                 } else {
                     // Everything seems fine with this log message ....
                     Map<String, String> atts = dataPacket.getAttributes();

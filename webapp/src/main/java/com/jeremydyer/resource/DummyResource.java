@@ -39,4 +39,13 @@ public class DummyResource {
         empty.length();
         return Response.ok("OK").build();
     }
+
+    @GET
+    @Timed
+    @Path("kill")
+    public Response killJVM() {
+        LOGGER.warn("killing jvm");
+        System.exit(-1);
+        return Response.ok("OK").build();
+    }
 }
